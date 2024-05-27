@@ -1,25 +1,25 @@
 package com.poscodx.mysite.controller;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.poscodx.mysite.controller.action.main.MainAction;
 
-public class MainServlet extends HttpServlet {
+public class MainServlet extends ActionServlet {
   private static final long serialVersionUID = 1L;
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-      request
-            .getRequestDispatcher("/WEB-INF/views/main/index.jsp")  //view(Servlet -> jsp)로 코드의 흐름이 옮겨갈 수 있도록 객체 생성 
-            .forward(request, response);  
+  @Override
+  protected Action getAction(String actionName) {
+    return new MainAction(); // 이때 실행되는 내용이 아래 주석친 doGet() 실행과 동일
   }
 
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-
-    doGet(request, response);
-  }
+  // protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  // throws ServletException, IOException {
+  // request.getRequestDispatcher("/WEB-INF/views/main/index.jsp")
+  // .forward(request, response);
+  // }
+  //
+  // protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  // throws ServletException, IOException {
+  //
+  // doGet(request, response);
+  // }
 
 }
