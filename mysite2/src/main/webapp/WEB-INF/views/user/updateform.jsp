@@ -15,7 +15,6 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="user">
-					<!--  절대경로 사용 -->
 				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath}/user">
 					<input type="hidden" name="a" value="update">
 					<label class="block-label" for="name">이름</label>
@@ -23,6 +22,7 @@
 
 					<label class="block-label" for="email">이메일</label>
 					<h4>${userVo.email }</h4>
+					
 					
 					<label class="block-label">패스워드</label>
 					<input name="password" type="password" value="">

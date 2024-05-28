@@ -48,7 +48,7 @@ public class UserDao {
     return result;
   }
 
-  public com.poscodx.mysite.vo.UserVo findByNoAndPassword(String email, String password) {
+  public UserVo findByNoAndPassword(String email, String password) {
     UserVo result = null;
 
     try (Connection conn = getConnection();
@@ -79,7 +79,7 @@ public class UserDao {
 
     try (Connection conn = getConnection();
         PreparedStatement pstmt1 =
-            conn.prepareStatement("select no, name, email, gender from user where = ?");) {
+            conn.prepareStatement("select no, name, email, gender from user where no = ?");) {
       pstmt1.setLong(1, userNo);
 
       ResultSet rs = pstmt1.executeQuery();
@@ -94,6 +94,7 @@ public class UserDao {
         result.setName(name);
         result.setEmail(email);
         result.setGender(gender);
+
       }
       rs.close();
     } catch (
@@ -104,4 +105,31 @@ public class UserDao {
     return result;
   }
 
+  public int update(UserVo userVo) {
+    int result = 0;
+
+    try (Connection conn = getConnection();
+        PreparedStatement pstmt1 =
+            conn.prepareStatement("update user set name = ?, gender = ? where no = ?");
+        PreparedStatement pstmt2 = conn.prepareStatement(
+            "update user set name = ?, password=password(?), gender= ? where no = ?");
+
+    ) {
+      if (userVo.getPassword() != null) {
+        pstmt2.setString(1, userVo.getName());
+        pstmt2.setString(2, userVo.getPassword());
+        pstmt2.setString(3, userVo.getGender());
+        pstmt2.setLong(4, userVo.getNo());
+        result = pstmt2.executeUpdate();
+      } else {
+        pstmt1.setString(1, userVo.getName());
+        pstmt1.setString(2, userVo.getGender());
+        pstmt1.setLong(3, userVo.getNo());
+        result = pstmt1.executeUpdate();
+      }
+    } catch (SQLException e) {
+      System.out.println("error:" + e);
+    }
+    return result;
+  }
 }

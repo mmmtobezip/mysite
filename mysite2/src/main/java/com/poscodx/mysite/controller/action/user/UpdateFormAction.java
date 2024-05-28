@@ -17,7 +17,7 @@ public class UpdateFormAction implements Action {
     HttpSession session = request.getSession();
 
     // Access Control
-    if (session != null) {
+    if (session == null) {
       response.sendRedirect(request.getContextPath());
       return; // 끝내는 작업 필수
     }
@@ -30,7 +30,7 @@ public class UpdateFormAction implements Action {
 
     UserVo userVo = new UserDao().findByNo(authUser.getNo());
     request.setAttribute("userVo", userVo);
-    request.getRequestDispatcher("/WEB-INF/views/user/updateform.jsp");
+    request.getRequestDispatcher("/WEB-INF/views/user/updateform.jsp").forward(request, response);
   }
 
 }

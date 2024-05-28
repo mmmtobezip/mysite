@@ -11,3 +11,6 @@ select * from guestbook;
 
 -- user login(in mysite2/UserDao)
 select no, name from user where email = 'robin@gmail.com' and password=password('robin');
+
+-- user update
+update user set name="로로", gender='male' where no = 4;
