@@ -48,7 +48,7 @@ public class UserDao {
     return result;
   }
 
-  public UserVo findByNoAndPassword(String email, String password) {
+  public com.poscodx.mysite.vo.UserVo findByNoAndPassword(String email, String password) {
     UserVo result = null;
 
     try (Connection conn = getConnection();
@@ -69,6 +69,36 @@ public class UserDao {
       }
       rs.close();
     } catch (SQLException e) {
+      System.out.println("error:" + e);
+    }
+    return result;
+  }
+
+  public UserVo findByNo(Long userNo) {
+    UserVo result = null;
+
+    try (Connection conn = getConnection();
+        PreparedStatement pstmt1 =
+            conn.prepareStatement("select no, name, email, gender from user where = ?");) {
+      pstmt1.setLong(1, userNo);
+
+      ResultSet rs = pstmt1.executeQuery();
+      if (rs.next()) {
+        Long no = rs.getLong(1);
+        String name = rs.getString(2);
+        String email = rs.getString(3);
+        String gender = rs.getString(4);
+
+        result = new UserVo();
+        result.setNo(no);
+        result.setName(name);
+        result.setEmail(email);
+        result.setGender(gender);
+      }
+      rs.close();
+    } catch (
+
+    SQLException e) {
       System.out.println("error:" + e);
     }
     return result;

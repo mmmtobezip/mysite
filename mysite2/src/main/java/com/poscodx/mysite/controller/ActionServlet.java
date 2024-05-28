@@ -38,11 +38,12 @@ public abstract class ActionServlet extends HttpServlet {
     doGet(req, resp);
   }
 
+
+
   public static interface Action {
     // GuestbookServlet의 if-else문 구현
     // getParameter, getContextPath() 들이 대부분 ServletExcpetion , IOException을 던짐
     void execute(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException;
-
   }
 }
