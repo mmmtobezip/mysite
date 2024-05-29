@@ -1,5 +1,6 @@
 package com.poscodx.mysite.controller;
 
+import javax.servlet.ServletException;
 import com.poscodx.mysite.controller.action.main.MainAction;
 
 public class MainServlet extends ActionServlet {
@@ -10,16 +11,12 @@ public class MainServlet extends ActionServlet {
     return new MainAction(); // 이때 실행되는 내용이 아래 주석친 doGet() 실행과 동일
   }
 
-  // protected void doGet(HttpServletRequest request, HttpServletResponse response)
-  // throws ServletException, IOException {
-  // request.getRequestDispatcher("/WEB-INF/views/main/index.jsp")
-  // .forward(request, response);
-  // }
-  //
-  // protected void doPost(HttpServletRequest request, HttpServletResponse response)
-  // throws ServletException, IOException {
-  //
-  // doGet(request, response);
-  // }
+  @Override
+  public void init() throws ServletException {
+    String config = getServletConfig().getInitParameter("config");
+    System.out.println("MainController.init() called: " + config);
+
+    super.init(); // 호출해야 다음 호출인 service()호출됨.
+  }
 
 }
