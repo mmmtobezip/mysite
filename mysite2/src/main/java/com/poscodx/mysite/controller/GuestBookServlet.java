@@ -15,7 +15,6 @@ public class GuestBookServlet extends HttpServlet {
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
     request.setCharacterEncoding("UTF-8");
     String action = request.getParameter("a");
 
@@ -34,7 +33,8 @@ public class GuestBookServlet extends HttpServlet {
 
       response.sendRedirect(request.getContextPath() + "/guestbook");
     } else if ("deleteform".equals(action)) {
-      RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/guestbook/deleteform.jsp");
+      RequestDispatcher rd =
+          request.getRequestDispatcher("/WEB-INF/views/guestbook/deleteform.jsp");
       rd.forward(request, response);
 
     } else if ("delete".equals(action)) {
