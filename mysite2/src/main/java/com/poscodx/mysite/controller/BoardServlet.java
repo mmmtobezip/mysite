@@ -10,4 +10,6 @@ public class BoardServlet extends ActionServlet {
   // 현재코드에선 액션이 없으므로 무조건 ActionServlet에 action = null이 들어가고 400 Error 할당
   // localhost:8080/mysite2/board
 
+  // list, wrtie, modify 등 액션 로직 추가
+
 }
