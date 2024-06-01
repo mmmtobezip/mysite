@@ -88,4 +88,51 @@ public class BoardDao {
 		    }
 		    return result;
 	}
-}
+
+	public BoardVo findByNo(Long boardNo) {
+		BoardVo result = null;
+		
+	    try (Connection conn = getConnection();
+			    PreparedStatement pstmt = conn.prepareStatement(
+			    		"select b.no, b.title, b.contents, a.name, b.hit, date_format(b.reg_date, '%Y/%m/%d %H:%i:%s'), b.g_no, b.o_no, b.depth, b.user_no "
+			    		+ "from user a, board b " 
+			    		+ "where a.no = b.user_no "
+			    		+ "and b.no = ?");) {
+	    	pstmt.setLong(1, boardNo);
+	        
+	    	ResultSet rs = pstmt.executeQuery();
+	    	if(rs.next()) {
+	    		Long no = rs.getLong(1);
+	    		String title = rs.getString(2);
+	    		String contents = rs.getString(3);
+	    		String userName = rs.getString(4);
+	    		int hit = rs.getInt(5);
+	    		String regDate = rs.getString(6);
+	    		int groupNo = rs.getInt(7);
+	    		int orderNo = rs.getInt(8);
+	    		int depth = rs.getInt(9);
+	    		Long userNo = rs.getLong(10);
+	    		
+	    		BoardVo boardVo = new BoardVo();
+	    		boardVo.setNo(no);
+	    		boardVo.setTitle(title);
+	    		boardVo.setContents(contents);
+	    		boardVo.setUserName(userName);
+	    		boardVo.setHit(hit);
+	    		boardVo.setRegDate(regDate);
+	    		boardVo.setGroupNo(groupNo);
+	    		boardVo.setOrderNo(orderNo);
+	    		boardVo.setDepth(depth);
+	    		boardVo.setUserNo(userNo);
+	    		
+	    		result = boardVo;
+	    		
+	    	}
+	    	rs.close();
+	    } catch (SQLException e) {
+	    	System.out.println("error:" + e);
+	    }
+	    return result;
+	    }
+	}
+
