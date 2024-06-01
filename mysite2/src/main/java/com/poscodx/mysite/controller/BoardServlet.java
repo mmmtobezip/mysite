@@ -1,15 +1,20 @@
 package com.poscodx.mysite.controller;
 
+import java.util.Map;
+
+import com.poscodx.mysite.controller.action.board.BoardAction;
+import com.poscodx.mysite.controller.action.board.WriteAction;
+import com.poscodx.mysite.controller.action.board.WriteFormAction;
+
 public class BoardServlet extends ActionServlet {
   private static final long serialVersionUID = 1L;
-
+  
+  private Map<String, Action> mapAction = Map.of(
+		  "writeform", new WriteFormAction(),
+		  "write", new WriteAction());
   @Override
   protected Action getAction(String actionName) {
-    return null;
+    return mapAction.getOrDefault(actionName, new BoardAction());
+    
   }
-  // 현재코드에선 액션이 없으므로 무조건 ActionServlet에 action = null이 들어가고 400 Error 할당
-  // localhost:8080/mysite2/board
-
-  // list, wrtie, modify 등 액션 로직 추가
-
 }
