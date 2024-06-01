@@ -27,6 +27,8 @@ public class JoinAction implements Action {
     System.out.println(vo);
     new UserDao().insert(vo);
 
+    //request.setAttribute("alertType", "joinSuccessed");
     response.sendRedirect(request.getContextPath() + "/user?a=joinsuccess");
+    //request.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(request, response);
   }
 }
