@@ -23,6 +23,7 @@ public class ViewAction implements Action{
 		request.setAttribute("regDate", boardVo.getRegDate());
 		request.setAttribute("contents", boardVo.getContents());
 		request.setAttribute("userName", boardVo.getUserName());
+		request.setAttribute("userNo", boardVo.getUserNo());
 		
 		request.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(request, response);
 	}
