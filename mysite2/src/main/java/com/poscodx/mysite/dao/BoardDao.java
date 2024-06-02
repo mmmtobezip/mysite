@@ -221,5 +221,21 @@ public class BoardDao {
 		}
 	    return updateGroupNo;
 	}
+
+	public int updateHit(Long no) {
+		int result = 0;
+	    try (Connection conn = getConnection();
+	        PreparedStatement pstmt =
+	        	conn.prepareStatement("update board set hit=hit+1 where no = ?");) {
+	    	
+	    	pstmt.setLong(1, no);
+	    	result = pstmt.executeUpdate();
+	    	
+	    } catch (SQLException e) {
+	       System.out.println("error:" + e);
+	    }
+	    return result;
+		
+	}
 }
 

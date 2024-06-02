@@ -17,6 +17,7 @@ public class ViewAction implements Action{
 		Long no = Long.parseLong(request.getParameter("no"));
 		
 		BoardVo boardVo = new BoardDao().findByNo(no);
+		new BoardDao().updateHit(no);
 		
 		request.setAttribute("no", no);
 		request.setAttribute("title", boardVo.getTitle());
