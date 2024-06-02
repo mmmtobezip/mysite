@@ -20,5 +20,4 @@ public class DeleteAction implements Action{
 		//성공적으로 삭제한 alert + 메인으로 돌아가기 
 		response.sendRedirect(request.getContextPath() + "/board");
 	}
-
 }

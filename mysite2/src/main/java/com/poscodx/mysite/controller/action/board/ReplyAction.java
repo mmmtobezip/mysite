@@ -33,8 +33,8 @@ public class ReplyAction implements Action{
 	    String contents = request.getParameter("contents");
 	    String parentNo = request.getParameter("parentNo");
 	    if(title == null || title.equals("")) {
-	    	//title안적고 글쓰기 불가 -> alert로 알려주고 다시 현재 글쓰기 페이지 보여주기 
-	    	response.sendRedirect(request.getContextPath());
+	    	request.setAttribute("alertType", "writeFormNoti");
+	    	request.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(request, response);
 	    	return;
 	    }
 	    
@@ -54,5 +54,4 @@ public class ReplyAction implements Action{
 	    response.sendRedirect(request.getContextPath() + "/board");
 	    
 	}
-
 }

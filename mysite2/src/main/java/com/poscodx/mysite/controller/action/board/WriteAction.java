@@ -32,7 +32,8 @@ public class WriteAction implements Action {
 	    String title = request.getParameter("title");
 	    String contents = request.getParameter("contents");
 	    if(title == null || title.equals("")) {
-	    	response.sendRedirect(request.getContextPath());
+	    	request.setAttribute("alertType", "writeFormNoti");
+	    	request.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(request, response);
 	    	return;
 	    }
 	    
@@ -46,10 +47,8 @@ public class WriteAction implements Action {
 	    boardVo.setOrderNo(0L); 
 	    boardVo.setDepth(0); 
 	    boardVo.setUserNo(authUser.getNo());
-	    
-	    System.out.println("새글 작성의 boardVo " + boardVo);
+
 	    new BoardDao().insert(boardVo);
-	    System.out.println("새글 작성");
 	    
 	    response.sendRedirect(request.getContextPath() + "/board");
 	}
