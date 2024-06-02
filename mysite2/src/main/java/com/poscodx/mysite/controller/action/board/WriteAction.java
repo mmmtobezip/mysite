@@ -49,8 +49,8 @@ public class WriteAction implements Action {
 	    boardVo.setContents(contents);
 	    boardVo.setHit(0);
 	    boardVo.setGroupNo(updateGroupNo);
-	    boardVo.setOrderNo(0L); //부모는 orderNo가 
-	    boardVo.setDepth(0); //부모의 depth는 0 
+	    boardVo.setOrderNo(0L); 
+	    boardVo.setDepth(0); 
 	    boardVo.setUserNo(authUser.getNo());
 	    
 	    System.out.println("새글 작성의 boardVo " + boardVo);

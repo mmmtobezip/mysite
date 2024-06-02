@@ -20,21 +20,21 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${title }</td>
+						<td>${boardVo.title }</td>
 					</tr>
 					<tr>
 						<td class="label">작성자</td>
-						<td>${userName }</td>
+						<td>${boardVo.userName }</td>
 					</tr>
 					<tr>
 						<td class="label">작성일</td>
-						<td>${regDate }</td>
+						<td>${boardVo.regDate }</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-										${fn:replace(fn:replace(fn:replace(contents, ">", "&gt;"), "<", "&lt;"), newline, "<br>") }
+									${fn:replace(fn:replace(fn:replace(boardVo.contents, ">", "&gt;"), "<", "&lt;"), newline, "<br>") }
 							</div>
 						</td>
 					</tr>
@@ -42,14 +42,14 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board?a=list">글목록</a>
 					
-					<c:if test="${userNo == authUser.no }" >
-							<a href="${pageContext.request.contextPath}/board?a=updateform&no=${no }">글수정</a>
+					<c:if test="${boardVo.userNo == authUser.no }" >
+							<a href="${pageContext.request.contextPath}/board?a=updateform&no=${boardVo.no }">글수정</a>
 					</c:if>
 				</div>
 				
 				<c:if test="${not empty authUser }">
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${no }" id="new-book">답글작성</a>
+						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${boardVo.no }" id="new-book">답글작성</a>
 					</div>
 				</c:if>
 			</div>

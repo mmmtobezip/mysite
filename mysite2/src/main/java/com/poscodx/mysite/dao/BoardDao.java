@@ -91,10 +91,10 @@ public class BoardDao {
 		       result.add(vo);
 		      }
 		    rs.close();
-		    } catch (SQLException e) {
-		      System.out.println("Error:" + e);
-		    }
-		    return result;
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		}
+		return result;
 	}
 
 	public BoardVo findByNo(Long boardNo) {
@@ -265,39 +265,39 @@ public class BoardDao {
 	                 + "from user a, board b "
 	                 + "where a.no = b.user_no "
 	                 + "order by b.g_no desc, b.o_no asc "
-	                 + "limit ?, ?")) {
+	                 + "limit ?, ?");){
 	    	
 	        pstmt.setInt(1, startRow);
 	        pstmt.setInt(2, displayRow);
 
-	        try (ResultSet rs = pstmt.executeQuery()) {
-	            while (rs.next()) {
-	                Long no = rs.getLong(1);
-	                String title = rs.getString(2);
-	                String contents = rs.getString(3);
-	                String userName = rs.getString(4);
-	                Integer hit = rs.getInt(5);
-	                String regDate = rs.getString(6);
-	                Long userNo = rs.getLong(7);
-	                Long groupNo = rs.getLong(8);
-	                Long orderNo = rs.getLong(9);
-	                Integer depth = rs.getInt(10);
+	    	ResultSet rs = pstmt.executeQuery();
+	        while(rs.next()) {
+                Long no = rs.getLong(1);
+                String title = rs.getString(2);
+                String contents = rs.getString(3);
+                String userName = rs.getString(4);
+                Integer hit = rs.getInt(5);
+                String regDate = rs.getString(6);
+                Long userNo = rs.getLong(7);
+                Long groupNo = rs.getLong(8);
+                Long orderNo = rs.getLong(9);
+                Integer depth = rs.getInt(10);
 
-	                BoardVo vo = new BoardVo();
-	                vo.setNo(no);
-	                vo.setTitle(title);
-	                vo.setUserName(userName);
-	                vo.setContents(contents);
-	                vo.setHit(hit);
-	                vo.setRegDate(regDate);
-	                vo.setUserNo(userNo);
-	                vo.setGroupNo(groupNo);
-	                vo.setOrderNo(orderNo);
-	                vo.setDepth(depth);
+                BoardVo vo = new BoardVo();
+                vo.setNo(no);
+                vo.setTitle(title);
+                vo.setUserName(userName);
+                vo.setContents(contents);
+                vo.setHit(hit);
+                vo.setRegDate(regDate);
+                vo.setUserNo(userNo);
+                vo.setGroupNo(groupNo);
+                vo.setOrderNo(orderNo);
+                vo.setDepth(depth);
 
-	                result.add(vo);
-	            }
+                result.add(vo);
 	        }
+	        rs.close();
 	    } catch (SQLException e) {
 	        System.out.println("Error:" + e);
 	    }
