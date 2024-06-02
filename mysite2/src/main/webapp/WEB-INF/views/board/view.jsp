@@ -42,7 +42,7 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board?a=list">글목록</a>
 					<c:choose>
-						<c:when test="${not empty authUser }">
+						<c:when test="${userNo == authUser.no }">
 							<div class="bottom">
 								<a href="${pageContext.request.contextPath}/board?a=updateform&no=${no}">글수정</a>
 							</div>	
