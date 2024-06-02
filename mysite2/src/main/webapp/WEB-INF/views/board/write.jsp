@@ -18,7 +18,7 @@
 					<input type = "hidden" name = "a" value="write">
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2" style="background-color: #CCE5FF;">글쓰기</th>
+							<th colspan="2">글쓰기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>

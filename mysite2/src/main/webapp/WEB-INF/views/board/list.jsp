@@ -42,7 +42,7 @@
 							<td>${boardVo.regDate }</td>
 							
 							<c:if test="${authUser.no == boardVo.userNo }">
-									<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no }" class="del">삭제</a></td>
+									<td><a class="del" button onclick="confirmDelete(${boardVo.no})">삭제</button></td>
 							</c:if>
 						</tr>
 					</c:forEach>
@@ -80,5 +80,14 @@
 		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
 		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 	</div>
+ <script>
+     function confirmDelete(no) {
+        if (confirm("게시글을 삭제하시겠습니까?")) {
+             location.href = "${pageContext.request.contextPath}/board?a=delete&no=" + no;
+        } else {
+        	location.href = "${pageContext.request.contextPath}/board";
+        }
+      }
+</script>
 </body>
 </html>

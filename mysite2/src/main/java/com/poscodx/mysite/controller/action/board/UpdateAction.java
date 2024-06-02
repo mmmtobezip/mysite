@@ -41,9 +41,7 @@ public class UpdateAction implements Action{
 	    boardVo.setUserNo(authUser.getNo());
 	    
 	    request.setAttribute("boardVo", new BoardDao().update(boardVo));
-	    
-	    response.sendRedirect(request.getContextPath() + "/board?a=view&no=" + no);
-		
+	    request.setAttribute("alertType", "updateSuccess");
+	    request.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(request, response);
 	}
-
 }

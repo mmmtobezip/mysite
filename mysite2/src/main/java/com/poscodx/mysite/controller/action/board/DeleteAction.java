@@ -13,9 +13,9 @@ public class DeleteAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long no = Long.parseLong(request.getParameter("no"));
+		String no = request.getParameter("no");
 		
-		new BoardDao().deleteByNo(no);
+		new BoardDao().deleteByNo(Long.parseLong(no));
 		
 		//성공적으로 삭제한 alert + 메인으로 돌아가기 
 		response.sendRedirect(request.getContextPath() + "/board");
