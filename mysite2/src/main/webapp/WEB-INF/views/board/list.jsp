@@ -27,10 +27,10 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<c:set var="count" value="${fn:length(list) }" />
+					<c:set var="startNo" value="${paging.totalCount - (paging.page - 1) * paging.displayRow }" />
 					<c:forEach items="${list }" var="boardVo" varStatus="status" >
 						<tr>
-							<td>${count - status.index }</td>
+							<td>${startNo - status.index }</td>
 							<td style="text-align:left; padding-left: ${20*boardVo.depth }px">
 								<c:if test="${boardVo.depth > 0 }">
 									<img src='${pageContext.request.contextPath }/assets/images/reply.png' />
@@ -44,27 +44,28 @@
 							<c:if test="${authUser.no == boardVo.userNo }">
 									<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no }" class="del">삭제</a></td>
 							</c:if>
-<%-- 								
-							<c:choose>
-								<c:when test="${authUser.no == boardVo.userNo }">
-									<div class="bottom">
-										<td><a href="${pageContext.request.contextPath}/board?a=delete&no=${boardVo.no }" class="del">삭제</a></td>
-									</div>	
-								</c:when>	
-							</c:choose> --%>
 						</tr>
 					</c:forEach>
 				</table>
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test="${paging.prevExist }">
+							<li><a href="${pageContext.request.contextPath}/board?a=list&p=${paging.beginPage - 1}">◀</a></li>
+						</c:if>
+						<c:forEach var="pageNo" begin="${paging.beginPage }" end="${paging.endPage }">
+							<c:choose>
+								<c:when test="${pageNo == paging.page }">
+									<li class="selected">${pageNo }</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="${pageContext.request.contextPath}/board?a=list&p=${pageNo}">${pageNo}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${paging.nextExist }">
+							<li><a href="${pageContext.request.contextPath}/board?a=list&p=${paging.endPage + 1}">▶</a></li>
+						</c:if>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->

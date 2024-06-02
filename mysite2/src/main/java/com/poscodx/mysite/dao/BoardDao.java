@@ -114,11 +114,11 @@ public class BoardDao {
 	    		String title = rs.getString(2);
 	    		String contents = rs.getString(3);
 	    		String userName = rs.getString(4);
-	    		int hit = rs.getInt(5);
+	    		Integer hit = rs.getInt(5);
 	    		String regDate = rs.getString(6);
 	    		Long groupNo = rs.getLong(7);
 	    		Long orderNo = rs.getLong(8);
-	    		int depth = rs.getInt(9);
+	    		Integer depth = rs.getInt(9);
 	    		Long userNo = rs.getLong(10);
 	    		
 	    		BoardVo boardVo = new BoardVo();
@@ -235,7 +235,73 @@ public class BoardDao {
 	       System.out.println("error:" + e);
 	    }
 	    return result;
-		
+	}
+	
+	public int getTotalRowCnt() {
+		int count = 0;
+	    try (Connection conn = getConnection();
+	        PreparedStatement pstmt =
+	        	conn.prepareStatement("select count(*) from board");) {
+	    	 
+	    	ResultSet rs = pstmt.executeQuery();
+	    	 
+	    	 if(rs.next()) {
+	    		 count = rs.getInt(1);
+	    	 }
+	    	
+	    } catch (SQLException e) {
+	       System.out.println("error:" + e);
+	    }
+	    return count;
+	}
+	
+	public List<BoardVo> findByPage(int page, int displayRow) {
+	    List<BoardVo> result = new ArrayList<>();
+	    int startRow = (page - 1) * displayRow;
+
+	    try (Connection conn = getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(
+	                 "select b.no, b.title, b.contents, a.name, b.hit, date_format(b.reg_date, '%Y/%m/%d %H:%i:%s'), b.user_no, b.g_no, b.o_no, b.depth "
+	                 + "from user a, board b "
+	                 + "where a.no = b.user_no "
+	                 + "order by b.g_no desc, b.o_no asc "
+	                 + "limit ?, ?")) {
+	    	
+	        pstmt.setInt(1, startRow);
+	        pstmt.setInt(2, displayRow);
+
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                Long no = rs.getLong(1);
+	                String title = rs.getString(2);
+	                String contents = rs.getString(3);
+	                String userName = rs.getString(4);
+	                Integer hit = rs.getInt(5);
+	                String regDate = rs.getString(6);
+	                Long userNo = rs.getLong(7);
+	                Long groupNo = rs.getLong(8);
+	                Long orderNo = rs.getLong(9);
+	                Integer depth = rs.getInt(10);
+
+	                BoardVo vo = new BoardVo();
+	                vo.setNo(no);
+	                vo.setTitle(title);
+	                vo.setUserName(userName);
+	                vo.setContents(contents);
+	                vo.setHit(hit);
+	                vo.setRegDate(regDate);
+	                vo.setUserNo(userNo);
+	                vo.setGroupNo(groupNo);
+	                vo.setOrderNo(orderNo);
+	                vo.setDepth(depth);
+
+	                result.add(vo);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error:" + e);
+	    }
+	    return result;
 	}
 }
 

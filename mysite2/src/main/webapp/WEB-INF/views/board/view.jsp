@@ -45,18 +45,13 @@
 					<c:if test="${userNo == authUser.no }" >
 							<a href="${pageContext.request.contextPath}/board?a=updateform&no=${no }">글수정</a>
 					</c:if>
-					
-					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${no }" id="new-book">답글작성</a>
-					</c:if>
-<%-- 					<c:choose>
-						<c:when >
-							<div class="bottom">
-								<a href="${pageContext.request.contextPath}/board?a=updateform&no=${no }">글수정</a>
-							</div>	
-						</c:when>	
-					</c:choose> --%>
 				</div>
+				
+				<c:if test="${not empty authUser }">
+					<div class="bottom">
+						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${no }" id="new-book">답글작성</a>
+					</div>
+				</c:if>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />

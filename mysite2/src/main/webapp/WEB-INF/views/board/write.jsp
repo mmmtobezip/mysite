@@ -16,10 +16,9 @@
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
 					<input type = "hidden" name = "a" value="write">
-<%-- 					<input type = "hidden" name = "no" value="${param.no }"> --%>
 					<table class="tbl-ex">
 						<tr>
-							<th colspan="2" style="background-color: #CCE5FF; text-align: center;">글쓰기</th>
+							<th colspan="2" style="background-color: #CCE5FF;">글쓰기</th>
 						</tr>
 						<tr>
 							<td class="label">제목</td>
@@ -28,13 +27,13 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="contents" style="height: 350px;"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board">취소</a>
-						<input type="submit" value="등록">
+							<a href="${pageContext.request.contextPath }/board">취소</a>
+							<input type="submit" value="등록">
 					</div>
 				</form>				
 			</div>
