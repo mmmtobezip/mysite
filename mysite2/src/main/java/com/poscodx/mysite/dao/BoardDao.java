@@ -30,12 +30,12 @@ public class BoardDao {
 		int result = 0;
 	    try (Connection conn = getConnection();
 	        PreparedStatement pstmt = conn.prepareStatement(
-	        		  "insert into board(title, contents, hit, reg_date, g_no, o_no, depth, user_no) "
-	        		  + "values(?, ?, ?, now(), ?, ?, ?, ?)");
+	        		  "insert into board(no, title, contents, hit, reg_date, g_no, o_no, depth, user_no) "
+	        		  + "values(null, ?, ?, ?, now(), ?, ?, ?, ?)");
 	    	PreparedStatement pstmt2 = conn.prepareStatement("select last_insert_id() from dual");) {
 
 	    	pstmt.setString(1, vo.getTitle());
-	    	pstmt.setString(2,  vo.getContents());
+	    	pstmt.setString(2, vo.getContents());
 	    	pstmt.setInt(3, vo.getHit());
 	    	pstmt.setInt(4, vo.getGroupNo());
 	    	pstmt.setInt(5, vo.getOrderNo());
@@ -58,10 +58,10 @@ public class BoardDao {
 
 		try (Connection conn = getConnection();
 		    PreparedStatement pstmt = conn.prepareStatement(
-		    		"select b.no, b.title, b.contents, a.name, b.hit, date_format(b.reg_date, '%Y/%m/%d %H:%i:%s') "
+		    		"select b.no, b.title, b.contents, a.name, b.hit, date_format(b.reg_date, '%Y/%m/%d %H:%i:%s'), b.user_no, b.g_no, b.o_no, b.depth "
 		    		+ "from user a, board b " 
-		    		+ "where a.no = b.user_no "
-		    		+ "order by g_no desc, o_no asc");
+		    		+ "where a.no=b.user_no "
+		    		+ "order by b.g_no desc, b.o_no asc");
 		    ResultSet rs = pstmt.executeQuery();) {
 
 		    while (rs.next()) {
@@ -71,6 +71,10 @@ public class BoardDao {
 		       String userName = rs.getString(4);
 		       Integer hit = rs.getInt(5);
 		       String regDate = rs.getString(6);
+		       Long userNo = rs.getLong(7);
+		       Integer groupNo = rs.getInt(8);
+		       Integer orderNo = rs.getInt(9);
+		       Integer depth = rs.getInt(10);
 
 		       BoardVo vo = new BoardVo();
 		       vo.setNo(no);
@@ -79,6 +83,10 @@ public class BoardDao {
 		       vo.setContents(contents);
 		       vo.setHit(hit);
 		       vo.setRegDate(regDate);
+		       vo.setUserNo(userNo);
+		       vo.setGroupNo(groupNo);
+		       vo.setOrderNo(orderNo);
+		       vo.setDepth(depth);
 		       
 		       result.add(vo);
 		      }
@@ -134,5 +142,19 @@ public class BoardDao {
 	    }
 	    return result;
 	    }
+
+	public int deleteByNo(Long boardNo) {
+	    int result = 0;
+
+	    try (Connection conn = getConnection();
+	        PreparedStatement pstmt =
+	            conn.prepareStatement("delete from board where no = ?");) {
+	      pstmt.setLong(1, boardNo);
+	      result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	      System.out.println("Error:" + e);
+	    }
+	    return result;
+	  }
 	}
 
