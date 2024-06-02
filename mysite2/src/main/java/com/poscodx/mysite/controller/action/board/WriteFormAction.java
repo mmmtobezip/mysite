@@ -13,23 +13,7 @@ import com.poscodx.mysite.vo.UserVo;
 public class WriteFormAction implements Action {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession();
-//		
-//	    if (session == null) {
-//	        response.sendRedirect(request.getContextPath());
-//	        return;
-//	    }
-//	    
-//	    
-//		UserVo authUser = (UserVo) session.getAttribute("authUser");
-//	    if (authUser == null) {
-//	        response.sendRedirect(request.getContextPath());
-//	        return;
-//	    }
-	    
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 	    request.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(request, response);
-		
 	}
-
 }

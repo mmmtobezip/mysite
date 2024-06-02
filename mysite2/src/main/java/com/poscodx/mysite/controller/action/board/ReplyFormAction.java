@@ -15,8 +15,7 @@ public class ReplyFormAction implements Action{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long no = Long.parseLong(request.getParameter("no"));
 		request.setAttribute("parentNo", no);
-		
-		//request.setAttribute("boardVo", new BoardDao().findByNo(no));
+
 		request.getRequestDispatcher("WEB-INF/views/board/reply.jsp").forward(request, response);
 		
 	}

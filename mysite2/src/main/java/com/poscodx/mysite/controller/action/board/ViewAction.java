@@ -39,16 +39,7 @@ public class ViewAction implements Action{
             response.addCookie(cookie);
         }
         
-//		request.setAttribute("no", no);
-//		request.setAttribute("title", boardVo.getTitle());
-//		request.setAttribute("regDate", boardVo.getRegDate());
-//		request.setAttribute("contents", boardVo.getContents());
-//		request.setAttribute("userName", boardVo.getUserName());
-//		request.setAttribute("userNo", boardVo.getUserNo());
-//		
 		request.setAttribute("boardVo", new BoardDao().findByNo(no));
-		
 		request.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(request, response);
 	}
-
 }

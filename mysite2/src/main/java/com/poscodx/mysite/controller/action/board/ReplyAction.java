@@ -48,10 +48,8 @@ public class ReplyAction implements Action{
 	    boardVo.setOrderNo(parentVo.getOrderNo() + 1);
 	    boardVo.setDepth(parentVo.getDepth() + 1);
 	    boardVo.setUserNo(authUser.getNo());
-	    
-	    System.out.println("답글 작성의 boardVo: " + boardVo);
+
 	    new BoardDao().insertReply(boardVo, parentVo);
-	    System.out.println("답글  작성");
 	    
 	    response.sendRedirect(request.getContextPath() + "/board");
 	    

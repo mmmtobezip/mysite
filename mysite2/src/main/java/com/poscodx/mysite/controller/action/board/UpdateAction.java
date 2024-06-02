@@ -22,8 +22,7 @@ public class UpdateAction implements Action{
 	        response.sendRedirect(request.getContextPath());
 	        return;
 	    }
-	    
-	    
+	        
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 	    if (authUser == null) {
 	        response.sendRedirect(request.getContextPath());

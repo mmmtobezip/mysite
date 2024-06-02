@@ -17,7 +17,5 @@ public class UpdateFormAction implements Action{
 		
 		request.setAttribute("boardVo", new BoardDao().findByNo(no));
 		request.getRequestDispatcher("WEB-INF/views/board/modify.jsp").forward(request, response);
-		
 	}
-
 }

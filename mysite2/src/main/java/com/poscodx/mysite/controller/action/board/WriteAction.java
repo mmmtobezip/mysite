@@ -23,13 +23,8 @@ public class WriteAction implements Action {
 	        return;
 	    }
 	    
-	    
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 	    if (authUser == null) {
-	    	//로그인한 유저만 글쓰기 가능 -> alret로 알려주고 로그인 페이지로 이동 
-	    	//request.setAttribute("alertType", "loginChecked");
-	    	//response.sendRedirect(request.getContextPath() + "/user?a=joinchecked");
-	    	//request.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(request, response);
 	    	response.sendRedirect(request.getContentType() + "/user?a=login");
 	        return;
 	    } 
@@ -37,7 +32,6 @@ public class WriteAction implements Action {
 	    String title = request.getParameter("title");
 	    String contents = request.getParameter("contents");
 	    if(title == null || title.equals("")) {
-	    	//title안적고 글쓰기 불가 -> alert로 알려주고 다시 현재 글쓰기 페이지 보여주기 
 	    	response.sendRedirect(request.getContextPath());
 	    	return;
 	    }
