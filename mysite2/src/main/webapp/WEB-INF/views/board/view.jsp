@@ -41,13 +41,21 @@
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath}/board?a=list">글목록</a>
-					<c:choose>
-						<c:when test="${userNo == authUser.no }">
+					
+					<c:if test="${userNo == authUser.no }" >
+							<a href="${pageContext.request.contextPath}/board?a=updateform&no=${no }">글수정</a>
+					</c:if>
+					
+					<c:if test="${not empty authUser }">
+						<a href="${pageContext.request.contextPath }/board?a=replyform&no=${no }" id="new-book">답글작성</a>
+					</c:if>
+<%-- 					<c:choose>
+						<c:when >
 							<div class="bottom">
 								<a href="${pageContext.request.contextPath}/board?a=updateform&no=${no }">글수정</a>
 							</div>	
 						</c:when>	
-					</c:choose>
+					</c:choose> --%>
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.poscodx.mysite.controller.action.board.BoardAction;
 import com.poscodx.mysite.controller.action.board.DeleteAction;
+import com.poscodx.mysite.controller.action.board.ReplyAction;
+import com.poscodx.mysite.controller.action.board.ReplyFormAction;
 import com.poscodx.mysite.controller.action.board.UpdateAction;
 import com.poscodx.mysite.controller.action.board.UpdateFormAction;
 import com.poscodx.mysite.controller.action.board.ViewAction;
@@ -20,7 +22,9 @@ public class BoardServlet extends ActionServlet {
 		  "view", new ViewAction(),
 		  "delete", new DeleteAction(),
 		  "updateform", new UpdateFormAction(),
-		  "update", new UpdateAction());
+		  "update", new UpdateAction(), 
+		  "replyform", new ReplyFormAction(),
+		  "reply", new ReplyAction());
   @Override
   protected Action getAction(String actionName) {
     return mapAction.getOrDefault(actionName, new BoardAction());

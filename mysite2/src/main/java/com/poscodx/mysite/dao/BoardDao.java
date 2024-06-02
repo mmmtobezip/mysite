@@ -37,8 +37,8 @@ public class BoardDao {
 	    	pstmt.setString(1, vo.getTitle());
 	    	pstmt.setString(2, vo.getContents());
 	    	pstmt.setInt(3, vo.getHit());
-	    	pstmt.setInt(4, vo.getGroupNo());
-	    	pstmt.setInt(5, vo.getOrderNo());
+	    	pstmt.setLong(4, vo.getGroupNo());
+	    	pstmt.setLong(5, vo.getOrderNo());
 	    	pstmt.setInt(6, vo.getDepth());
 	    	pstmt.setLong(7, vo.getUserNo());
 	    	  
@@ -72,8 +72,8 @@ public class BoardDao {
 		       Integer hit = rs.getInt(5);
 		       String regDate = rs.getString(6);
 		       Long userNo = rs.getLong(7);
-		       Integer groupNo = rs.getInt(8);
-		       Integer orderNo = rs.getInt(9);
+		       Long groupNo = rs.getLong(8);
+		       Long orderNo = rs.getLong(9);
 		       Integer depth = rs.getInt(10);
 
 		       BoardVo vo = new BoardVo();
@@ -116,8 +116,8 @@ public class BoardDao {
 	    		String userName = rs.getString(4);
 	    		int hit = rs.getInt(5);
 	    		String regDate = rs.getString(6);
-	    		int groupNo = rs.getInt(7);
-	    		int orderNo = rs.getInt(8);
+	    		Long groupNo = rs.getLong(7);
+	    		Long orderNo = rs.getLong(8);
 	    		int depth = rs.getInt(9);
 	    		Long userNo = rs.getLong(10);
 	    		
@@ -174,6 +174,52 @@ public class BoardDao {
 	       System.out.println("error:" + e);
 	    }
 	    return result;
+	}
+
+	public int insertReply(BoardVo boardVo, BoardVo parentVo) {
+		int result = 0;
+	    try (Connection conn = getConnection();
+		    PreparedStatement pstmt1 =
+		    	conn.prepareStatement("update board set o_no = o_no + 1 where g_no = ? and o_no >= ?");
+	    	PreparedStatement pstmt2 = 
+	    		conn.prepareStatement( "insert into board(no, title, contents, hit, reg_date, g_no, o_no, depth, user_no) "
+	        		  + "values(null, ?, ?, ?, now(), ?, ?, ?, ?)");) {
+		    	
+	    	pstmt1.setLong(1, parentVo.getGroupNo());
+	    	pstmt1.setLong(2, boardVo.getOrderNo());
+	    	result = pstmt1.executeUpdate();
+	    	
+	    	pstmt2.setString(1, boardVo.getTitle());
+	    	pstmt2.setString(2, boardVo.getContents());
+	    	pstmt2.setInt(3, boardVo.getHit());
+	    	pstmt2.setLong(4, boardVo.getGroupNo());
+	    	pstmt2.setLong(5, boardVo.getOrderNo());
+	    	pstmt2.setInt(6, boardVo.getDepth());
+	    	pstmt2.setLong(7, boardVo.getUserNo());
+	    	result += pstmt2.executeUpdate();
+	    	
+		    } catch (SQLException e) {
+		       System.out.println("error:" + e);
+		    }
+		    return result;
+	}
+
+	public Long getNextGroupNo() {
+		Long updateGroupNo = 1L;
+	    try (Connection conn = getConnection();
+		     PreparedStatement pstmt =
+		        conn.prepareStatement("select ifnull(max(g_no), 0)+1 from board");) {
+		    	
+	    	 ResultSet rs = pstmt.executeQuery();
+	    	 
+	    	 if(rs.next()) {
+	    		 updateGroupNo = rs.getLong(1);
+	    	 }
+
+		} catch (SQLException e) {
+			 System.out.println("error:" + e);
+		}
+	    return updateGroupNo;
 	}
 }
 

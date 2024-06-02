@@ -6,8 +6,8 @@ public class BoardVo {
 	private String contents;
 	private int hit;
 	private String regDate;
-	private int groupNo;
-	private int orderNo;
+	private Long groupNo;
+	private Long orderNo;
 	private int depth;
 	private Long userNo;
 	private String userName;
@@ -42,16 +42,16 @@ public class BoardVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public int getGroupNo() {
+	public Long getGroupNo() {
 		return groupNo;
 	}
-	public void setGroupNo(int groupNo) {
+	public void setGroupNo(Long groupNo) {
 		this.groupNo = groupNo;
 	}
-	public int getOrderNo() {
+	public Long getOrderNo() {
 		return orderNo;
 	}
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(Long orderNo) {
 		this.orderNo = orderNo;
 	}
 	public int getDepth() {
