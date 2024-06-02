@@ -152,9 +152,28 @@ public class BoardDao {
 	      pstmt.setLong(1, boardNo);
 	      result = pstmt.executeUpdate();
 	    } catch (SQLException e) {
-	      System.out.println("Error:" + e);
+	    	System.out.println("Error:" + e);
 	    }
 	    return result;
 	  }
+
+	public int update(BoardVo vo) {
+		int result = 0;
+	    try (Connection conn = getConnection();
+	        PreparedStatement pstmt =
+	        	conn.prepareStatement("update board set title = ?, contents = ? where no = ? and user_no = ?");) {
+	    	
+	    	pstmt.setString(1, vo.getTitle());
+	    	pstmt.setString(2, vo.getContents());
+	    	pstmt.setLong(3, vo.getNo());
+	    	pstmt.setLong(4, vo.getUserNo());
+	    	
+	    	result = pstmt.executeUpdate();
+	    	
+	    } catch (SQLException e) {
+	       System.out.println("error:" + e);
+	    }
+	    return result;
 	}
+}
 
