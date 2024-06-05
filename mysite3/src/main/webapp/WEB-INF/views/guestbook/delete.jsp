@@ -13,14 +13,12 @@
 	<div id="container">
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form action="${pageContext.request.contextPath}/guestbook" method="post" >
-					<input type="hidden" name="a" value="delete">
-					<input type='hidden' name="no" value="${param.no }">
+				<form method="post" action="${pageContext.request.contextPath}/guestbook/delete/${no }">
 					<label>비밀번호</label>
 					<input type="password" name="password">
 					<input type="submit" value="확인">
 				</form>
-			<a href="${pageContext.request.contextPath}/guestbook"></a>
+			<a href="${pageContext.request.contextPath}/guestbook">방명록 리스트</a>
 			</div>
 		</div>
 	</div>
