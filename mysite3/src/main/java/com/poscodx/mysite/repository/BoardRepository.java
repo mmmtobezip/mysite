@@ -1,4 +1,4 @@
-package com.poscodx.mysite.dao;
+package com.poscodx.mysite.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,9 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 import com.poscodx.mysite.vo.BoardVo;
 
-public class BoardDao {
+@Repository
+public class BoardRepository {
+
+  private SqlSession sqlSession;
+
+  public BoardRepository(SqlSession sqlSession) {
+    this.sqlSession = sqlSession;
+  }
+
   private Connection getConnection() throws SQLException {
     Connection conn = null;
     try {
@@ -51,46 +61,7 @@ public class BoardDao {
   }
 
   public List<BoardVo> findAll() {
-    List<BoardVo> result = new ArrayList<>();
-
-    try (Connection conn = getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(
-            "select b.no, b.title, b.contents, a.name, b.hit, date_format(b.reg_date, '%Y/%m/%d %H:%i:%s'), b.user_no, b.g_no, b.o_no, b.depth "
-                + "from user a, board b " + "where a.no=b.user_no "
-                + "order by b.g_no desc, b.o_no asc");
-        ResultSet rs = pstmt.executeQuery();) {
-
-      while (rs.next()) {
-        Long no = rs.getLong(1);
-        String title = rs.getString(2);
-        String contents = rs.getString(3);
-        String userName = rs.getString(4);
-        Integer hit = rs.getInt(5);
-        String regDate = rs.getString(6);
-        Long userNo = rs.getLong(7);
-        Long groupNo = rs.getLong(8);
-        Long orderNo = rs.getLong(9);
-        Integer depth = rs.getInt(10);
-
-        BoardVo vo = new BoardVo();
-        vo.setNo(no);
-        vo.setTitle(title);
-        vo.setUserName(userName);
-        vo.setContents(contents);
-        vo.setHit(hit);
-        vo.setRegDate(regDate);
-        vo.setUserNo(userNo);
-        vo.setGroupNo(groupNo);
-        vo.setOrderNo(orderNo);
-        vo.setDepth(depth);
-
-        result.add(vo);
-      }
-      rs.close();
-    } catch (SQLException e) {
-      System.out.println("Error:" + e);
-    }
-    return result;
+    return sqlSession.selectList("board.findAll");
   }
 
   public BoardVo findByNo(Long boardNo) {
