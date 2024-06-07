@@ -3,6 +3,7 @@ package com.poscodx.mysite.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.poscodx.mysite.repository.BoardRepository;
 import com.poscodx.mysite.vo.BoardVo;
 
@@ -79,8 +80,11 @@ public class BoardService {
     return boardRepository.findAll();
   }
 
+  @Transactional
   public void write(BoardVo vo) {
-    // TODO Auto-generated method stub
-
+    if (vo.getGroupNo() != null) {
+      boardRepository.getNextGroupNo();
+    }
+    boardRepository.insert(vo);
   }
 }

@@ -8,12 +8,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.poscodx.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
 
+  @Autowired
   private SqlSession sqlSession;
 
   public BoardRepository(SqlSession sqlSession) {
@@ -34,30 +36,7 @@ public class BoardRepository {
   }
 
   public int insert(BoardVo vo) {
-    int result = 0;
-    try (Connection conn = getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(
-            "insert into board(no, title, contents, hit, reg_date, g_no, o_no, depth, user_no) "
-                + "values(null, ?, ?, ?, now(), ?, ?, ?, ?)");
-        PreparedStatement pstmt2 = conn.prepareStatement("select last_insert_id() from dual");) {
-
-      pstmt.setString(1, vo.getTitle());
-      pstmt.setString(2, vo.getContents());
-      pstmt.setInt(3, vo.getHit());
-      pstmt.setLong(4, vo.getGroupNo());
-      pstmt.setLong(5, vo.getOrderNo());
-      pstmt.setInt(6, vo.getDepth());
-      pstmt.setLong(7, vo.getUserNo());
-
-      result = pstmt.executeUpdate();
-
-      ResultSet rs = pstmt2.executeQuery();
-      vo.setNo(rs.next() ? rs.getLong(1) : null);
-      rs.close();
-    } catch (SQLException e) {
-      System.out.println("error:" + e);
-    }
-    return result;
+    return sqlSession.insert("board.write", vo);
   }
 
   public List<BoardVo> findAll() {
