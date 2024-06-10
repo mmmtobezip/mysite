@@ -32,6 +32,13 @@
 			<mvc:mapping path="/user/logout"/>
 			<bean class = "com.poscodx.mysite.security.LogoutInterceptor" />
 		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:mapping path="/user/logout"/>
+			<mvc:mapping path="/assets/**"/>
+			<bean class = "com.poscodx.mysite.security.AuthInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 	<!--  ViewResolver 설정  -->

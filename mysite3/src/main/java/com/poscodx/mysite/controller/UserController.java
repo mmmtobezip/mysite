@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.security.AuthUser;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
@@ -44,15 +46,9 @@ public class UserController {
     return "user/login";
   }
 
+  @Auth
   @RequestMapping(value = "/update", method = RequestMethod.GET)
-  public String update(HttpSession session, Model model) {
-    UserVo authUser = (UserVo) session.getAttribute("authUser");
-
-    if (authUser == null) {
-      return "redirect:/";
-    }
-
-    // =====횡단 관심 분리=====
+  public String update(@AuthUser UserVo authUser, Model model) {
 
     UserVo vo = userService.getUser(authUser.getNo());
     // update.jsp에서 받고 있는 값으로 변수를 지정해주기

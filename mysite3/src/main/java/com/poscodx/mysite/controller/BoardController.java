@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.service.BoardService;
 import com.poscodx.mysite.vo.BoardVo;
 import com.poscodx.mysite.vo.UserVo;
@@ -50,15 +51,11 @@ public class BoardController {
   }
 
   // WirteFormAction to write.jsp
+  @Auth
   @RequestMapping(value = "/write", method = RequestMethod.GET)
-  public String write(HttpSession session) {
+  public String write() {
 
-    UserVo authUser = (UserVo) session.getAttribute("authUser");
-    if (authUser == null) {
-      return "redirect:/board";
-    }
     return "board/write";
-    // 만약 파라미터로 board?a= + page 이런식으로 보내려면 @RequestParam 가져오기
   }
 
   @RequestMapping(value = "/write", method = RequestMethod.POST)
