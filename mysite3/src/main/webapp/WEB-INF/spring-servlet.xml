@@ -12,6 +12,9 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 >
 
+	<!--  auto proxy -->
+	<aop:aspectj-autoproxy/>
+	
 	<!--  vaildator, 기본 Messageconverter외의 다른 Messageconverter 등록 -->
 	<mvc:annotation-driven />
 	

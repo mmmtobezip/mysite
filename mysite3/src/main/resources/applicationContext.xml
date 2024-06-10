@@ -13,6 +13,9 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	
+	<!--  auto proxy -> custom aop-->
+	<aop:aspectj-autoproxy/>
+	
 	<!-- Transaction AOP Porxy -->	
 	<tx:annotation-driven />
 	
