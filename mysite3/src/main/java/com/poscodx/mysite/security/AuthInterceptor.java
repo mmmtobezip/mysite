@@ -30,8 +30,11 @@ public class AuthInterceptor implements HandlerInterceptor {
     // auth가 null인 경우
     // 4. handlerMethod에 @Auth가 없는 경우 Type(Class)에 붙어 있는지 확인하는 추가적인 작업 필요
     // handlerMethod.() 여기 method에서 찾기
+    if (auth == null) {
 
-    // 5. Handler Method에 @Auth가 없는 경우
+    }
+
+    // 5. Type이나 Method에 @Auth가 없는 경우 -> 메인페이지의 경우(User, Board 등)
     if (auth == null) {
       return true;
     }

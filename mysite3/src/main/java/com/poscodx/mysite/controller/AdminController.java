@@ -1,15 +1,24 @@
 package com.poscodx.mysite.controller;
 
+import javax.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.poscodx.mysite.security.Auth;
 import com.poscodx.mysite.vo.SiteVo;
 
-@Auth(role = "ADMIN")
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+  @Autowired
+  private ServletContext servletContext;
+  @Autowired
+  private ApplicationContext applicationContext;
+
+  @Auth(role = "ADMIN")
   @RequestMapping("") // 아무것도 안쳐서 들어올 경우
   public String main() {
     return "admin/main";

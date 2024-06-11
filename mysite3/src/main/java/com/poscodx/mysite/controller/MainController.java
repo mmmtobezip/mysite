@@ -8,7 +8,7 @@ import com.poscodx.mysite.service.SiteService;
 
 @Controller
 public class MainController {
-  private SiteService siteService;
+  private final SiteService siteService;
 
   public MainController(SiteService siteService) {
     this.siteService = siteService;
