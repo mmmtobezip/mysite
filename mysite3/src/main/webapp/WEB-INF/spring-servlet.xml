@@ -16,7 +16,12 @@
 	<aop:aspectj-autoproxy/>
 	
 	<!--  vaildator, 기본 Messageconverter외의 다른 Messageconverter 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<!-- Argument Resolver 등록 -->
+		<mvc:argument-resolvers>
+			<bean class="com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver"/>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 	
 	<!-- servlet container의 default servlet 위임 핸들러  -->
 	<mvc:default-servlet-handler/>
