@@ -17,6 +17,15 @@
 	
 	<!--  vaildator, 기본 Messageconverter외의 다른 Messageconverter 등록 -->
 	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+    			<property name="supportedMediaTypes">
+        			<list>
+             			<value>text/html; charset=UTF-8</value>
+        			</list>
+    			</property>
+			</bean>
+		</mvc:message-converters>
 		<!-- Argument Resolver 등록 -->
 		<mvc:argument-resolvers>
 			<bean class="com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver"/>
