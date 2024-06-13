@@ -26,7 +26,7 @@ public class UserController {
 
   @RequestMapping(value = "/join", method = RequestMethod.GET)
   // joinform.jsp
-  public String join() {
+  public String join(@ModelAttribute UserVo vo) {
     return "user/join";
   }
 
@@ -45,7 +45,7 @@ public class UserController {
 
       return "user/join";
     }
-    // userService.join(vo);
+    userService.join(vo);
     return "redirect:/user/joinsuccess"; // 아래 joinsuccess 요청으로 들어감
   }
 
