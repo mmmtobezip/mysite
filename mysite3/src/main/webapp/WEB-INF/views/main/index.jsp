@@ -16,7 +16,7 @@
 			<div id="content">
 				<div id="site-introduction">
 				<!-- 자기 사진으로 바꾸기  assets/images/luffy.jpg" style='width: 250px'-->
-					<img id="profile" src="${pageContext.request.contextPath}/assets/images/images.jpg" style ='width: 250px'>
+					<img id="profile" src="${pageContext.request.contextPath}/assets/images/profile.jpg" style ='width: 250px'>
 					<h2>안녕하세요. 박지현의  mysite에 오신 것을 환영합니다.</h2>
 					<p>
 						이 사이트는  웹 프로그램밍 실습과제 예제 사이트입니다.<br>

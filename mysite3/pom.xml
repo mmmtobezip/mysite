@@ -61,6 +61,25 @@
 		<version>1.4</version>
 	</dependency>
 
+	<!-- validation -->		
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>6.2.3.Final</version>
+	</dependency>
+	
+	<!-- common fileupload -->
+	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-io</groupId>
+		<artifactId>commons-io</artifactId>
+		<version>1.4</version>
+	</dependency>
+	
 	<!--jstl -->
 	<dependency>
     	<groupId>jstl</groupId>

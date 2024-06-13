@@ -3,9 +3,13 @@
 
 package com.poscodx.mysite.controller;
 
+import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.poscodx.mysite.security.Auth;
@@ -27,9 +31,21 @@ public class UserController {
   }
 
   @RequestMapping(value = "/join", method = RequestMethod.POST)
-  public String join(UserVo vo) {
-    System.out.println(vo);
-    userService.join(vo);
+  public String join(@ModelAttribute @Valid UserVo vo, BindingResult result, Model model) {
+    if (result.hasErrors()) {
+      Map<String, Object> map = result.getModel();
+
+      model.addAllAttributes(map);
+
+      // Error 출력
+      // List<ObjectError> list = result.getAllErrors();
+      // for (ObjectError error : list) {
+      // System.out.println(error);
+      // }
+
+      return "user/join";
+    }
+    // userService.join(vo);
     return "redirect:/user/joinsuccess"; // 아래 joinsuccess 요청으로 들어감
   }
 
