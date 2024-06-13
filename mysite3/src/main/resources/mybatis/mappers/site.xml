@@ -2,44 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site">
-	<insert id="insert" parameterType="uservo">
+	<select id="find" parameterType="sitevo">
 		<![CDATA[
-			insert into user values(null, #{name }, #{email }, password(#{password }), #{gender }, now(), 'USER')
-		]]>
-		
-		<selectKey keyProperty="no" resultType="long" order="AFTER">
-			<![CDATA[
-				select last_insert_id() from dual
-			]]>
-		</selectKey>
-	</insert>
-	
-	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
-		<![CDATA[
-			select no, name, role 
-			from user 
-			where email = #{email } and password=password(#{password })
+			select title, welcome, profile, description
+			from site
+			order by no asc
 		]]>
 	</select>
 	
-	<select id="findByNo" parameterType="long" resultType="uservo">
+	<update id="update" parameterType="sitevo">
 		<![CDATA[
-			select no, name, email, gender from user where no = #{no }
+			update site set titles = #{title }, welcome = #{welcom }, profile = #{profile }, description = #{description }
+			where no = 1 
 		]]>
-	</select>
-	
-	<update id="update" parameterType="uservo">
-		<choose>
-			<when test='password == ""'>
-				<![CDATA[
-					update user set name = #{name }, gender = #{gender } where no = #{no }
-				]]>
-			</when>
-			<otherwise>
-				<![CDATA[
-					update user set name = #{name }, password=password(#{password }), gender= #{gender } where no = #{no }
-				]]>
-			</otherwise>
-		</choose>
 	</update>
 </mapper>

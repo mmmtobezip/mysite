@@ -17,6 +17,7 @@
 	
 	<!--  vaildator, 기본 Messageconverter외의 다른 Messageconverter 등록 -->
 	<mvc:annotation-driven>
+		<!-- Message Converter -->
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
     			<property name="supportedMediaTypes">
@@ -25,7 +26,17 @@
         			</list>
     			</property>
 			</bean>
+			
+			
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			   <property name="supportedMediaTypes">
+			       <list>
+			            <value>application/json; charset=UTF-8</value>
+			        </list>
+			   </property>
+			</bean>
 		</mvc:message-converters>
+		
 		<!-- Argument Resolver 등록 -->
 		<mvc:argument-resolvers>
 			<bean class="com.poscodx.mysite.security.AuthUserHandlerMethodArgumentResolver"/>

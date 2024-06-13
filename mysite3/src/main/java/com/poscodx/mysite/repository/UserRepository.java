@@ -23,6 +23,10 @@ public class UserRepository {
         Map.of("email", email, "password", password));
   }
 
+  public UserVo findByEmail(String email) {
+    return sqlSession.selectOne("user.findByEmail", email);
+  }
+
   public UserVo findByNo(Long no) {
     return sqlSession.selectOne("user.findByNo", no);
   }
@@ -30,4 +34,5 @@ public class UserRepository {
   public int update(UserVo vo) {
     return sqlSession.update("user.update", vo);
   }
+
 }

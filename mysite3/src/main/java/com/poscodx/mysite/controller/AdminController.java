@@ -4,8 +4,12 @@ import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import com.poscodx.mysite.security.Auth;
+import com.poscodx.mysite.service.FileUploadService;
+import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.SiteVo;
 
 
@@ -17,15 +21,29 @@ public class AdminController {
   private ServletContext servletContext;
   @Autowired
   private ApplicationContext applicationContext;
+  @Autowired
+  private SiteService siteService;
+  @Autowired
+  private FileUploadService fileUploadService;
 
   @Auth(role = "ADMIN")
   @RequestMapping("") // 아무것도 안쳐서 들어올 경우
-  public String main() {
+  public String main(Model model) {
+    SiteVo vo = siteService.getSite();
+    model.addAttribute("siteVo", vo);
     return "admin/main";
   }
 
   @RequestMapping("/main/update")
-  public String update(SiteVo siteVo) {
+  public String update(SiteVo siteVo, MultipartFile file) {
+    String profile = fileUploadService.restore(file);
+    if (profile != null) {
+      siteVo.setProfile(profile);
+    }
+
+    siteService.updateSite(siteVo);
+    servletContext.setAttribute("siteVo", siteVo);
+
     return "redirect:/admin";
   }
 
