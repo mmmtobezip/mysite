@@ -13,6 +13,7 @@ import com.poscodx.mysite.service.SiteService;
 import com.poscodx.mysite.vo.SiteVo;
 
 
+@Auth(role = "ADMIN")
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,7 +27,7 @@ public class AdminController {
   @Autowired
   private FileUploadService fileUploadService;
 
-  @Auth(role = "ADMIN")
+
   @RequestMapping("") // 아무것도 안쳐서 들어올 경우
   public String main(Model model) {
     SiteVo vo = siteService.getSite();
