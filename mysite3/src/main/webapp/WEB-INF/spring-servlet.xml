@@ -88,8 +88,7 @@
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			 <list>
-			 	<value>messages/messages_ko</value>
-				<value>messages/messages_en</value>
+			 	<value>messages/message</value>
 			 </list>
 		</property>
 	</bean>
