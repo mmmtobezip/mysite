@@ -25,6 +25,7 @@ public class SiteInterceptor implements HandlerInterceptor {
 
     // Locale
     System.out.println("resolver-locale:" + localeResolver.resolveLocale(request).getLanguage());
+    request.setAttribute("language", localeResolver.resolveLocale(request).getLanguage());
     return true;
   }
 
