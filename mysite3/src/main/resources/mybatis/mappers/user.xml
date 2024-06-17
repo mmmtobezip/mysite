@@ -24,13 +24,17 @@
 	
 	<select id="findByEmail" parameterType="string" resultType="uservo">
 		<![CDATA[
-			select no, name, email, gender from user where email = #{email }
+			select no, name, email, gender 
+			from user 
+			where email = #{email }
 		]]>
 	</select>
 	
 	<select id="findByNo" parameterType="long" resultType="uservo">
 		<![CDATA[
-			select no, name, email, gender from user where no = #{no }
+			select no, name, email, gender 
+			from user 
+			where no = #{no }
 		]]>
 	</select>
 	

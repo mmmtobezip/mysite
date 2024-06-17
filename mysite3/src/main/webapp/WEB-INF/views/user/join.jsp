@@ -27,13 +27,18 @@ $(function() {
 				console.error(err);
 			},
 			success: function(response){
-				if(response.exist) {
+				console.log(response);
+				
+				if(response.result == "fail") {
+					console.error(response.message);
+					return;
+				}
+				if(response.data) {
 					alert("존재하는 이메일입니다. 다른 이메일을 사용해 주세요.")
 					$("#email").val("");
 					$("#email").focus();
 					return;	
 				}
-				
 				// 사용할 수 있는 이메일
 				$("#btn-check").hide();
 				$("#img-check").show();

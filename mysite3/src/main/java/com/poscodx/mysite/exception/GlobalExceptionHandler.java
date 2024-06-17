@@ -1,31 +1,51 @@
 package com.poscodx.mysite.exception;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poscodx.mysite.dto.JsonResult;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
   private static final Log logger = LogFactory.getLog(GlobalExceptionHandler.class);
 
-  @ExceptionHandler(Exception.class) // 받아야할 exception 종류를 적어줌. controller에서 발생하는 exception의 부모를
-                                     // 명시하는데
-  // checkedexception도 throws로 위로 toss할 수 있는데, 모든 excepton을 받기 위해 부모의 exception.class를 명시해줌.
-  // 만약 종류별로 처리하고 싶으면 SQL Exception처리 전용 메서드 등을 따로 분리해줘도
-  public String handler(Exception e, Model model) {
+  @ExceptionHandler(Exception.class)
+  public void handler(HttpServletRequest request, HttpServletResponse response, Exception e)
+      throws ServletException, IOException {
     // 1. 로깅(logging)
     StringWriter errors = new StringWriter(); // StringWrite안에 buffer 메모리에 wirte
     e.printStackTrace(new PrintWriter(errors));
-
-    // System.out.println(error.toString()); -> logback.xml에서 처리
     logger.error(errors.toString());
 
-    // 2. 사과(종료)
-    model.addAttribute("error", errors.toString());
-    return "errors/exception";
+    // 2. 요청 구분
+    // 2-1. json 요청: request header에 application/json (o)
+    // 2-2. html 요청: request header에 application/json (x)
+    String accept = request.getHeader("accept");
+
+    if (accept.matches(".*application/json.*")) {
+      // 모든 문자와 비교(정규표현식)해서 해당 형식이라면 json으로 요청이 들어온 것
+      // 3. json 응답
+      JsonResult jsonResult = JsonResult.fail(errors.toString());
+      String jsonString = new ObjectMapper().writeValueAsString(jsonResult);
+
+      response.setStatus(HttpServletResponse.SC_OK);
+      response.setContentType("application/json; charset=utf-8");
+      OutputStream os = response.getOutputStream();
+      os.write(jsonString.getBytes("utf-8"));
+      os.close();
+    } else {
+      // 4. 사과 페이지(정상 종료)
+      request.setAttribute("error", errors.toString());
+      request.getRequestDispatcher("/WEB-INF/views/erros/exception").forward(request, response);
+    }
   }
 }

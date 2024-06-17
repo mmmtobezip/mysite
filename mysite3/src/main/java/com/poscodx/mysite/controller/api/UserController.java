@@ -24,10 +24,6 @@ public class UserController {
       @RequestParam(value = "email", required = true, defaultValue = "") String email) {
     UserVo vo = userService.getUser(email);
 
-    JsonResult jsonResult = new JsonResult();
-
-    jsonResult.setResult("success");
-    return jsonResult;
-
+    return JsonResult.success(vo != null);
   }
 }

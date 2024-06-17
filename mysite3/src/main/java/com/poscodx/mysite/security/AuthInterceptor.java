@@ -25,13 +25,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     // 3. Handler Method의 @Auth 가져오기
     // 로그인 했으니까 @Auth 가져올 수 있음
     Auth auth = handlerMethod.getMethodAnnotation(Auth.class); // @Auth가 존재하는 클래스명
-    Auth adminRole = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
+    // Auth adminRole = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 
     // *과제
     // auth가 null인 경우
     // 4. handlerMethod에 @Auth가 없는 경우 Type(Class)에 붙어 있는지 확인하는 추가적인 작업 필요
     if (auth == null) {
-      auth = adminRole;
+      auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
     }
 
     // 5. Type이나 Method에 @Auth가 없는 경우 -> 메인페이지의 경우(User, Board 등)
