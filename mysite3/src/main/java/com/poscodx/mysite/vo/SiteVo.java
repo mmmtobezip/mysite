@@ -2,7 +2,7 @@ package com.poscodx.mysite.vo;
 
 public class SiteVo {
   private Long no;
-  private String titile;
+  private String title;
   private String welcome;
   private String profile;
   private String description;
@@ -15,12 +15,12 @@ public class SiteVo {
     this.no = no;
   }
 
-  public String getTitile() {
-    return titile;
+  public String getTitle() {
+    return title;
   }
 
-  public void setTitile(String titile) {
-    this.titile = titile;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
   public String getWelcome() {
@@ -49,7 +49,7 @@ public class SiteVo {
 
   @Override
   public String toString() {
-    return "SiteVo [no=" + no + ", titile=" + titile + ", welcome=" + welcome + ", profile="
-        + profile + ", description=" + description + "]";
+    return "SiteVo [no=" + no + ", title=" + title + ", welcome=" + welcome + ", profile=" + profile
+        + ", description=" + description + "]";
   }
 }

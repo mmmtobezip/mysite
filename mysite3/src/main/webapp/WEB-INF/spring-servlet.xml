@@ -107,6 +107,9 @@
 	<!-- mvc url-resource mapping -->
 	<mvc:resources location="file:/mysite-uploads/" mapping="/assets/upload-images/**" />
 	
+	<!-- ApplicationContextEvenetListener  -->
+	<bean class="com.poscodx.mysite.event.ApplicationContextEventListener"/>
+	
 	<context:annotation-config />
 	<context:component-scan base-package="com.poscodx.mysite.controller, com.poscodx.mysite.exception" />
 </beans>

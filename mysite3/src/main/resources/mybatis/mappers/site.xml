@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site">
-	<select id="find" parameterType="sitevo">
+	<select id="find" resultType="sitevo">
 		<![CDATA[
 			select title, welcome, profile, description
 			from site
