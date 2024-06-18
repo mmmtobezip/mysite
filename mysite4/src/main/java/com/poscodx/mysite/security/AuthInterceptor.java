@@ -46,7 +46,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     // 7. session에 authUser에 대한 인증이 안되어 잇는 경우
     if (authUser == null) {
       response.sendRedirect(request.getContextPath() + "/user/login");
-      return false; // 뒤로가기 절대 불가!! handler 아직 존재ㄴ
+      return false; // 뒤로가기 절대 불가!! handler 아직 존재
     }
 
     // 8. 권한(Authorization) 체크를 위해 @Auth의 role 가져오기("USER", "ADMIN")

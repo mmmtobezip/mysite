@@ -3,17 +3,14 @@ package com.poscodx.mysite.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import com.poscodx.mysite.service.UserService;
 import com.poscodx.mysite.vo.UserVo;
 
 public class LoginInterceptor implements HandlerInterceptor {
+  @Autowired
   private UserService userService;
-
-
-  public LoginInterceptor(UserService userService) {
-    this.userService = userService;
-  }
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -25,21 +22,17 @@ public class LoginInterceptor implements HandlerInterceptor {
     if (authUser == null) {
       request.setAttribute("email", email);
       request.setAttribute("result", "fail");
-
       request.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(request, response);
-
       return false;
     }
 
     /* login 처리 */
-    System.out.println(authUser); // role이 존재하는지 체크
+    System.out.println(authUser);
 
     HttpSession session = request.getSession(true);
     session.setAttribute("authUser", authUser);
-
     response.sendRedirect(request.getContextPath());
 
     return false;
   }
-
 }

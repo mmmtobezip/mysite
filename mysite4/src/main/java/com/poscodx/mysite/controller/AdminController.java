@@ -32,6 +32,7 @@ public class AdminController {
   @RequestMapping("") // 아무것도 안쳐서 들어올 경우
   public String main(Model model) {
     SiteVo vo = siteService.getSite();
+    System.out.println(vo);
     model.addAttribute("siteVo", vo);
     return "admin/main";
   }
