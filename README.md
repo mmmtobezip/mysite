@@ -42,7 +42,7 @@
    - Declative Annotaions: @Auth, @AuthUser 지원
 7. Serving Static Resources **
    - Spring Resource Handler: External Resources(files uploaded)
-   - Default Servlet Handler: assets(images, css, js, etc..)
+   - Default Servlet Handler: assets(images, css, js, etc..) 지원 
 8. 기능 **
    - Upload File: Spring Multipart Resolver
    - Bean Validation: @Valid Annotaion
@@ -68,9 +68,9 @@
 5. View
    - JSP
    - JSTL & EL
-6. Security **
+6. Security 
    - Authentication(인증) & Authorization(권한)
-   - Spring Secuirty
+   - Spring Security
 7. Serving Static Resources
    - Spring Resource Handler: External Resources(files uploaded)
    - Default Servlet Handler: assets(images, css, js, etc..)
@@ -92,7 +92,7 @@
    - Transaction: DataSourceTransactionManager(Spring JDBC), @Transactional(Transaction AOP Proxy)
 5. View
    - Thymeleaf Template View **
-6. Security
+6. Security **
    - Authentication(인증) & Authorization(권한)
    - Spring Secuirty
 7. Serving Static Resources
