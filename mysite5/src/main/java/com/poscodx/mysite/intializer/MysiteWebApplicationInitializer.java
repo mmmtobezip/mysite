@@ -1,7 +1,10 @@
 package com.poscodx.mysite.intializer;
 
 import javax.servlet.Filter;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import com.poscodx.mysite.config.AppConfig;
 import com.poscodx.mysite.config.WebConfig;
@@ -32,5 +35,14 @@ public class MysiteWebApplicationInitializer
   // DispatcherServlet 만들 때 매핑시킬 URL
   protected String[] getServletMappings() {
     return new String[] {"/"};
+  }
+
+  @Override
+  protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+    DispatcherServlet servlet =
+        (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
+
+    servlet.setThrowExceptionIfNoHandlerFound(true);
+    return servlet;
   }
 }
