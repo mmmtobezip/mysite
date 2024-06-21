@@ -38,7 +38,9 @@ public class SecurityConfig {
     // "SPRING_SECURITY_";
     http.formLogin().loginPage("/user/login").loginProcessingUrl("/user/auth")
         .usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/")
-        .failureUrl("/user/login").and()
+        .failureUrl("/user/login?result=fail").and()
+
+        .csrf().disable()
 
         .authorizeHttpRequests(registry -> {
           /* ACL */
@@ -53,7 +55,7 @@ public class SecurityConfig {
   public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,
       PasswordEncoder passwordEncoder) {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-    authenticationProvider.setPasswordEncoder(null);
+    authenticationProvider.setPasswordEncoder(passwordEncoder);
     authenticationProvider.setUserDetailsService(userDetailsService); // 인터페이스 주입
 
     return new ProviderManager(authenticationProvider);
@@ -64,6 +66,7 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder(16);
   }
 
+  @Bean
   public UserDetailsService userDetailsService() {
     return new UserDetailsServiceImpl();
   }
