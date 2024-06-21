@@ -34,20 +34,45 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    // String s = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY =
-    // "SPRING_SECURITY_";
-    http.formLogin().loginPage("/user/login").loginProcessingUrl("/user/auth")
-        .usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/")
-        .failureUrl("/user/login?result=fail").and()
+      http
+          .logout()
+          .logoutUrl("/user/logout")
+          .and()
 
-        .csrf().disable()
+          .formLogin()
+          .loginPage("/user/login")
+          .loginProcessingUrl("/user/auth")
+          .usernameParameter("email")
+          .passwordParameter("password")
+          .defaultSuccessUrl("/")
+          .failureUrl("/user/login?result=fail")
+          .and()
+          
+          .csrf()
+          .disable()
+      
+          .authorizeHttpRequests(registry -> {
+              registry
+                  /* ACL */
+                  .requestMatchers(new RegexRequestMatcher("^/user/update$", null))
+                  .hasAnyRole("ADMIN", "USER")
+                  .requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null))
+                  .hasRole("ADMIN")
 
-        .authorizeHttpRequests(registry -> {
-          /* ACL */
-          registry.requestMatchers(new RegexRequestMatcher("^/user/update$", null))
-              .hasAnyRole("ADMIN", "USER").anyRequest().permitAll();
-        });
-    return http.build();
+                  .requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify)?/.*$", null))
+                  .hasAnyRole("ADMIN", "USER")
+
+                  .requestMatchers(new RegexRequestMatcher("^/user/update$", null))
+                  .hasAnyRole("ADMIN", "USER")
+
+                  .anyRequest()
+                  .permitAll();
+          });
+//            .exceptionHandling(exceptionHandlingConfigurer -> {
+//                exceptionHandlingConfigurer.accessDeniedPage("/WEB-INF/views/error/403.jsp")
+//        });
+
+      return http.build();
   }
 
   // Authentication Manager
