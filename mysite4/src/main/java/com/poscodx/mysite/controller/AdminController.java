@@ -45,7 +45,7 @@ public class AdminController {
     }
 
     siteService.updateSite(siteVo);
-    servletContext.setAttribute("siteVo", siteVo);
+    servletContext.setAttribute("sitevo", siteVo);
 
     SiteVo site = applicationContext.getBean(SiteVo.class);
     // site.setTitile(siteVo.getTitile());
