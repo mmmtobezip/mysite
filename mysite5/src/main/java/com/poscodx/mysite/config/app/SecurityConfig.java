@@ -1,5 +1,9 @@
 package com.poscodx.mysite.config.app;
 
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,10 +13,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import com.poscodx.mysite.security.UserDetailsServiceImpl;
@@ -34,45 +40,47 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      http
-          .logout()
-          .logoutUrl("/user/logout")
-          .and()
+    http.logout().logoutUrl("/user/logout").and()
 
-          .formLogin()
-          .loginPage("/user/login")
-          .loginProcessingUrl("/user/auth")
-          .usernameParameter("email")
-          .passwordParameter("password")
-          .defaultSuccessUrl("/")
-          .failureUrl("/user/login?result=fail")
-          .and()
-          
-          .csrf()
-          .disable()
-      
-          .authorizeHttpRequests(registry -> {
-              registry
-                  /* ACL */
-                  .requestMatchers(new RegexRequestMatcher("^/user/update$", null))
-                  .hasAnyRole("ADMIN", "USER")
-                  .requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null))
-                  .hasRole("ADMIN")
+        .formLogin().loginPage("/user/login").loginProcessingUrl("/user/auth")
+        .usernameParameter("email").passwordParameter("password").defaultSuccessUrl("/")
+        // .failureUrl("/user/login?result=fail")
+        .failureHandler(new AuthenticationFailureHandler() {
 
-                  .requestMatchers(new RegexRequestMatcher("^/board/?(write|reply|delete|modify)?/.*$", null))
-                  .hasAnyRole("ADMIN", "USER")
+          @Override
+          public void onAuthenticationFailure(HttpServletRequest request,
+              HttpServletResponse response, AuthenticationException exception)
+              throws IOException, ServletException {
+            request.setAttribute("email", request.getParameter("email"));
+            request.getRequestDispatcher("/user/login").forward(request, response);
 
-                  .requestMatchers(new RegexRequestMatcher("^/user/update$", null))
-                  .hasAnyRole("ADMIN", "USER")
+          }
 
-                  .anyRequest()
-                  .permitAll();
-          });
-//            .exceptionHandling(exceptionHandlingConfigurer -> {
-//                exceptionHandlingConfigurer.accessDeniedPage("/WEB-INF/views/error/403.jsp")
-//        });
+        }).and()
 
-      return http.build();
+        .csrf().disable()
+
+        .authorizeHttpRequests(registry -> {
+          registry
+              /* ACL */
+              .requestMatchers(new RegexRequestMatcher("^/user/update$", null))
+              .hasAnyRole("ADMIN", "USER")
+              .requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null)).hasRole("ADMIN")
+
+              .requestMatchers(
+                  new RegexRequestMatcher("^/board/?(write|reply|delete|modify)?/.*$", null))
+              .hasAnyRole("ADMIN", "USER")
+
+              .requestMatchers(new RegexRequestMatcher("^/user/update$", null))
+              .hasAnyRole("ADMIN", "USER")
+
+              .anyRequest().permitAll();
+        });
+    // .exceptionHandling(exceptionHandlingConfigurer -> {
+    // exceptionHandlingConfigurer.accessDeniedPage("/WEB-INF/views/error/403.jsp")
+    // });
+
+    return http.build();
   }
 
   // Authentication Manager
@@ -88,7 +96,7 @@ public class SecurityConfig {
 
   @Bean
   public BCryptPasswordEncoder passwordencoder() {
-    return new BCryptPasswordEncoder(16);
+    return new BCryptPasswordEncoder(4 /* 4 ~ 31 */);
   }
 
   @Bean
