@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>mysite</title>
+<title>${sitevo.title }</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet" type="text/css">
 </head>
