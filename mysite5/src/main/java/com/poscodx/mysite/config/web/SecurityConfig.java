@@ -57,5 +57,4 @@ public class SecurityConfig implements WebMvcConfigurer {
     registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
         .excludePathPatterns("/user/auth", "/user/logout", "/assets/**");
   }
-
 }
