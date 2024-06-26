@@ -9,10 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Internal Server Error(500) : Custom</h1>
-	<hr>
-	<pre style="color: #fe1100">
-${error }
-	</pre>
+	<h1>Unknown : Custom</h1>
+	<p>
+		잘못된 요청입니다. 
+	</p>
 </body>
 </html>
