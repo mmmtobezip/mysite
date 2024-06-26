@@ -4,4 +4,4 @@ insert into site values(null, 'MySite', '안녕하세요. 박지현의 mysite에
 
 select * from site;
 
-update site set title = "11", welcome = "hello", profile = "/images", description = "test" where no = 1 
+update site set title = "11", welcome = "hello", profile = "/images", description = "test" where no = 1;

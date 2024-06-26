@@ -10,6 +10,8 @@ update user set role='ADMIN' where no = 1;
 select * from user;
 select * from guestbook;
 
+select * from site;
+
 -- user login(in mysite2/UserDao)
 select no, name from user where email = 'robin@gmail.com' and password=password('robin');
 
@@ -21,7 +23,7 @@ alter table user add column role enum('ADMIN', 'USER') not null default 'USER';
 -- 새로 생성할 경우 
 insert into user values(null, '관리자', 'admin@mysite.com', password('1234'), 'female', current_date(), 'ADMIN');
 -- 권한만 업데이트할 경우 
-update user set role='ADMIN' where no = 1;
+update user set role='ADMIN' where no = 20;
 select * from user where role='ADMIN';
 
 delete from user where no = 5;
