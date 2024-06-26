@@ -53,7 +53,8 @@ public class UserController {
     return "user/joinsuccess";
   }
 
-  @RequestMapping(value = "/login", method = RequestMethod.GET)
+
+  @RequestMapping(value = "/login")
   // loginform.jsp
   public String login() {
     return "user/login";

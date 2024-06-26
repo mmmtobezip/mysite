@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
 <configuration>
-
 	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<charset>UTF-8</charset>
@@ -10,8 +10,8 @@
 		</encoder>
 	</appender>
 
-	<appender>
-		<!--  mac의 경우 자기 홈 디렉토리 밑으로 경로 지정  -->
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<!--  mac의 경우 자기 홈 디렉토리 밑으로 경로 지정  -->
 		<file>/mysite-logs/exception.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
@@ -25,19 +25,17 @@
 		</rollingPolicy>
 		<triggeringPolicy
 			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<MaxFileSize>100MB</MaxFileSize> <!-- 100MB 넘을 시 압축 후 저장  -->
+			<MaxFileSize>100MB</MaxFileSize>
 		</triggeringPolicy>
 	</appender>
 
-	<!-- 예외 로그: error -->
 	<logger name="com.poscodx.mysite.exception" level="error" additivity="false">
             <appender-ref ref="fileAppender" />
             <appender-ref ref="consoleAppender" />
-    </logger>   
+    </logger>
 	
-	<!-- 루트(글로벌) 로거, warn, info 으로도 바꿔보기 -->
-	<root level="debug">
+	<!-- 루트(글로벌) 로거 -->
+	<root level="info">
 		<appender-ref ref="consoleAppender" />
 	</root>
-
 </configuration>
