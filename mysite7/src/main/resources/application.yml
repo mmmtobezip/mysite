@@ -52,7 +52,7 @@ spring:
    # datasource
    datasource: 
       driver-class-name: org.mariadb.jdbc.Driver
-      url: jdbc:mariadb://192.168.0.191:3306/webdb?charset=utf8
+      url: jdbc:mariadb://192.168.64.2:3306/webdb?charset=utf8
       user-name: webdb
       password: webdb
       hikari:
