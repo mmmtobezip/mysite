@@ -24,7 +24,7 @@ spring:
    # web
    web:
       resources: 
-        static-locations: file:/mysite-uploads/, classpath:assets/
+        static-locations: file:/Users/mmm.zip/mysite-uploads/, classpath:assets/
         
    # message resources(i18n)
    messages:
