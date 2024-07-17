@@ -12,14 +12,14 @@
 
 	<appender>
 		<!--  mac의 경우 자기 홈 디렉토리 밑으로 경로 지정  -->
-		<file>/mysite-logs/exception.log</file>
+		<file>/Users/mmm.zip/mysite-logs/exception.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n
 			</Pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<FileNamePattern>/mysite-logs/exception.%i.log.zip</FileNamePattern>
+			<FileNamePattern>/Users/mmm.zip/mysite-logs/exception.%i.log.zip</FileNamePattern>
 			<MinIndex>1</MinIndex>
 			<MaxIndex>10</MaxIndex>
 		</rollingPolicy>
@@ -34,10 +34,22 @@
             <appender-ref ref="fileAppender" />
             <appender-ref ref="consoleAppender" />
     </logger>   
+    
+     <!-- Spring HttpMessageConverter Debug Logs -->
+    <logger name="org.springframework.http.converter" level="debug" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
+    
+     <!-- Spring AbstractMessageConverterMethodProcessor Logs -->
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor" level="debug" additivity="false">
+        <appender-ref ref="consoleAppender" />
+    </logger>
 	
 	<!-- 루트(글로벌) 로거, warn, info 으로도 바꿔보기 -->
 	<root level="info">
 		<appender-ref ref="consoleAppender" />
 	</root>
+	
+	
 
 </configuration>

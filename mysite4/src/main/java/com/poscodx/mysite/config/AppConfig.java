@@ -15,5 +15,4 @@ import com.poscodx.mysite.config.app.MyBatisConfig;
     "com.poscodx.mysite.aspect"})
 @Import({DBConfig.class, MyBatisConfig.class})
 public class AppConfig {
-
 }
